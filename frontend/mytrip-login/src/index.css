@@ -1,0 +1,78 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: #0f234c;
+  color: #fff;
+  margin: 0;
+  padding: 20px;
+  font-family: sans-serif;
+}
+
+.mytrip-navbar__items {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+}
+
+.mytrip-navbar__items > li {
+  padding: .375rem .75rem;
+  border-radius: .1875rem;
+  background-color: #01447B;
+  margin-right: 1rem;
+}
+
+.mytrip-navbar__items li > a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.mytrip-content {
+  padding: 10px;
+}
+
+.mytrip-content__login-form-row > button {
+  white-space: nowrap;
+  border: none;
+  border-radius: .1875rem;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #f2780c;
+  text-rendering: auto;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0;
+  text-shadow: none;
+  display: inline-block;
+}
+
+.mytrip-content__login-form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.mytrip-content__login-form-input-field {
+  background-color: #ffffec;
+  line-height: 1.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5em;
+  width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+  .mytrip-content__login-form-input-field {
+    width: 246px;
+  }
+
+  .mytrip-content__login-form-row > button {
+    width: 123px;
+  }
+}
