@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { eitherFunctionOrNot } from '../../utils/generalUtils';
+import { eitherFunctionOrNot } from '../utils/generalUtils';
 
 export default class LoginPage extends Component {
   constructor(props) {

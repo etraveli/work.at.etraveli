@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { eitherFunctionOrNot } from '../../utils/generalUtils';
+import { eitherFunctionOrNot } from '../utils/generalUtils';
 import { isAuthenticated, markSessionAsAuthenticated } from '../utils/authUtil';
 import * as myTripAPI from '../services/myTripAPI';
 

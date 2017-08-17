@@ -12,7 +12,7 @@ import loginPageWithRPC from '../containers/loginPageWithRPC';
 import MyTripPage from './myTripPage';
 import NoPageFoundPage from './noPageFoundPage';
 import { isAuthenticated, clearSession } from '../utils/authUtil';
-import { Left, Right } from '../../utils/generalUtils';
+import { Left, Right } from '../utils/generalUtils';
 
 const pageDecider = isAuthorized =>
   isAuthorized ? Right(isAuthorized) : Left(isAuthorized);

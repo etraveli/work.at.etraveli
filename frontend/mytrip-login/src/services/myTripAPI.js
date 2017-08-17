@@ -1,4 +1,4 @@
-import { Left, Right } from '../../utils/generalUtils';
+import { Left, Right } from '../utils/generalUtils';
 
 const defaultConfig = {
   credentials: 'same-origin',

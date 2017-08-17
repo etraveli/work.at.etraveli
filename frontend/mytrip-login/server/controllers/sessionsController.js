@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
-const Left = require('../../utils/generalUtils').Left;
-const Right = require('../../utils/generalUtils').Right;
+const Left = require('../../src/utils/generalUtils').Left;
+const Right = require('../../src/utils/generalUtils').Right;
 
 const secret = 'HowardHughes';
 
