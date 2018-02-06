@@ -2,8 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Link, Match, Miss } from 'react-router';
 import App from '../app';
-import HomePage from '../homePage';
-import NoPageFoundPage from '../noPageFoundPage';
+import HomePage from '../../components/homePage';
+import NoPageFoundPage from '../../components/noPageFoundPage';
 import * as authUtil from '../../utils/authUtil';
 
 jest.mock('../../utils/authUtil');
@@ -16,9 +16,9 @@ describe('<App/>', () => {
 
   it('matches component to url /', () => {
     const component = shallow(<App />);
-    expect(component.contains(
-      <Match exactly pattern="/" component={HomePage}/>
-    )).toBe(true);
+    expect(
+      component.contains(<Match exactly pattern="/" component={HomePage} />)
+    ).toBe(true);
   });
 
   describe('when user is not authenticated', () => {
@@ -38,8 +38,7 @@ describe('<App/>', () => {
       component
         .find(Match)
         .forEach(match => matchPatterns.push(match.prop('pattern')));
-      const loginPattern = matchPatterns
-        .find(pattern => pattern === '/login');
+      const loginPattern = matchPatterns.find(pattern => pattern === '/login');
       expect(loginPattern).toBeDefined();
     });
 
@@ -51,9 +50,7 @@ describe('<App/>', () => {
     it('does not render a link to logout', () => {
       const component = shallow(<App />);
       const linkPaths = [];
-      component
-        .find(Link)
-        .forEach(link => linkPaths.push(link.prop('to')));
+      component.find(Link).forEach(link => linkPaths.push(link.prop('to')));
       const logoutLink = linkPaths.find(path => path === '/logout');
       expect(logoutLink).toBe(undefined);
     });
@@ -81,17 +78,14 @@ describe('<App/>', () => {
       component
         .find(Match)
         .forEach(match => matchPatterns.push(match.prop('pattern')));
-      const loginPattern = matchPatterns
-        .find(pattern => pattern === '/mytrip');
+      const loginPattern = matchPatterns.find(pattern => pattern === '/mytrip');
       expect(loginPattern).toBeDefined();
     });
 
     it('renders a link to logout', () => {
       const component = shallow(<App />);
       const linkPaths = [];
-      component
-        .find(Link)
-        .forEach(link => linkPaths.push(link.prop('to')));
+      component.find(Link).forEach(link => linkPaths.push(link.prop('to')));
       const logoutLink = linkPaths.find(path => path === '/logout');
       expect(logoutLink).toBeDefined();
     });
@@ -102,8 +96,7 @@ describe('<App/>', () => {
       component
         .find(Match)
         .forEach(match => matchPatterns.push(match.prop('pattern')));
-      const loginPattern = matchPatterns
-        .find(pattern => pattern === '/logout');
+      const loginPattern = matchPatterns.find(pattern => pattern === '/logout');
       expect(loginPattern).toBeDefined();
     });
 
@@ -128,9 +121,9 @@ describe('<App/>', () => {
   describe('when url does not match an existing page', () => {
     it('renders an appropriate page', () => {
       const component = shallow(<App />);
-      expect(component.contains(
-        <Miss component={NoPageFoundPage}/>
-      )).toBe(true);
+      expect(component.contains(<Miss component={NoPageFoundPage} />)).toBe(
+        true
+      );
     });
   });
 });
