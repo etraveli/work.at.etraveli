@@ -1,38 +1,55 @@
 import React, { Component } from 'react';
-import { eitherFunctionOrNot } from '../utils/generalUtils';
-import { isAuthenticated, markSessionAsAuthenticated } from '../utils/authUtil';
-import * as myTripAPI from '../services/myTripAPI';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { login, loginInput } from '../actions';
+import LoginForm from '../components/loginForm';
 
-function persistJWT(data) {
-  if (data.jwt !== null) {
-    markSessionAsAuthenticated(data.jwt);
+export class LoginPage extends Component {
+  constructor(props) {
+    super(props);
+    this.handleFormInputChange = this.handleFormInputChange.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
-  return data;
+
+  handleFormInputChange(e) {
+    const { name: key, value } = e.target;
+    this.props.loginInput(key, value);
+  }
+
+  handleFormSubmit(e) {
+    e.preventDefault();
+    const { email, bookingNumber } = this.props;
+    this.props.login(email, bookingNumber);
+  }
+
+  render() {
+    return (
+      <LoginForm
+        email={this.props.email}
+        bookingNumber={this.props.bookingNumber}
+        handleInput={this.handleFormInputChange}
+        handleSubmit={this.handleFormSubmit}
+      />
+    );
+  }
 }
 
-export default function loginPageWithRPC(LoginPage) {
-  return class extends Component {
-    constructor(props) {
-      super(props);
-      this.handleLogin = this.handleLogin.bind(this);
-    }
+LoginPage.propTypes = {
+  email: PropTypes.string.isRequired,
+  bookingNumber: PropTypes.string.isRequired,
+  login: PropTypes.func.isRequired,
+  loginInput: PropTypes.func.isRequired
+};
 
-    handleLogin(email, bookingNumber) {
-      const onLogin = this.props.onLogin;
-      myTripAPI.login(email, bookingNumber)
-        .then(persistJWT)
-        .then(() =>
-          eitherFunctionOrNot(onLogin)
-            .fold(
-              () => {},
-              () => onLogin(isAuthenticated())
-            )
-        )
-        .catch(e => console.error(e));
-    }
+const mapStateToProps = state => ({
+  error: state.auth.error,
+  email: state.auth.email,
+  bookingNumber: state.auth.bookingNumber
+});
 
-    render() {
-      return <LoginPage onLogin={this.handleLogin} />;
-    }
-  };
-}
+const mapDispatchToProps = {
+  login,
+  loginInput
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

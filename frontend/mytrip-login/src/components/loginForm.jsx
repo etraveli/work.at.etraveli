@@ -1,69 +1,39 @@
-import React, { Component } from 'react';
-import { eitherFunctionOrNot } from '../utils/generalUtils';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export default class LoginPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: '',
-      bookingNumber: '',
-    };
+const LoginForm = ({ email, bookingNumber, handleSubmit, handleInput }) => (
+  <form onSubmit={handleSubmit} className="mytrip-content__login-form">
+    <div className="mytrip-content__login-form-row">
+      <label htmlFor="email">Email:</label>
+      <input
+        className="mytrip-content__login-form-input-field"
+        name="email"
+        type="text"
+        value={email}
+        onChange={handleInput}
+      />
+    </div>
+    <div className="mytrip-content__login-form-row">
+      <label htmlFor="bookingNumber">Booking number:</label>
+      <input
+        className="mytrip-content__login-form-input-field"
+        name="bookingNumber"
+        type="password"
+        value={bookingNumber}
+        onChange={handleInput}
+      />
+    </div>
+    <div className="mytrip-content__login-form-row">
+      <button type="submit">Login</button>
+    </div>
+  </form>
+);
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handleBookingNumberChange = this.handleBookingNumberChange.bind(this);
-  }
+LoginForm.propTypes = {
+  email: PropTypes.string.isRequired,
+  bookingNumber: PropTypes.string.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  handleInput: PropTypes.func.isRequired
+};
 
-  handleSubmit(event) {
-    event.preventDefault();
-    const onLogin = this.props.onLogin;
-    eitherFunctionOrNot(onLogin)
-      .fold(
-        () => {},
-        () => onLogin(this.state.email, this.state.bookingNumber)
-      );
-  }
-
-  handleEmailChange(event) {
-    this.setState({ email: event.target.value });
-  }
-
-  handleBookingNumberChange(event) {
-    this.setState({ bookingNumber: event.target.value });
-  }
-
-  render() {
-    return (
-      <form
-        onSubmit={this.handleSubmit}
-        className="mytrip-content__login-form"
-      >
-        <div className="mytrip-content__login-form-row">
-          <label htmlFor="email">Email:</label>
-          <input
-            className="mytrip-content__login-form-input-field"
-            name="email"
-            type="text"
-            value={this.state.email}
-            onChange={this.handleEmailChange}
-          />
-        </div>
-        <div className="mytrip-content__login-form-row">
-          <label htmlFor="bookingNumber">Booking number:</label>
-          <input
-            className="mytrip-content__login-form-input-field"
-            name="bookingNumber"
-            type="password"
-            value={this.state.bookingNumber}
-            onChange={this.handleBookingNumberChange}
-          />
-        </div>
-        <div className="mytrip-content__login-form-row">
-          <button type="submit">
-            Login
-          </button>
-        </div>
-      </form>
-    );
-  }
-}
+export default LoginForm;

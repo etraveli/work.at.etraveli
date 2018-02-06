@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { Link, Match, Miss } from 'react-router';
-import App from '../app';
+import { App } from '../app';
 import HomePage from '../../components/homePage';
 import NoPageFoundPage from '../../components/noPageFoundPage';
 import * as authUtil from '../../utils/authUtil';

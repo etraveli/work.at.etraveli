@@ -8,13 +8,14 @@ const initialState = {
 };
 
 export default function auth(state = initialState, action) {
+  console.log(action);
   switch (action.type) {
-    case types.LOGIN_REQUEST:
-      return state;
     case types.LOGIN_SUCCESS:
-      return state;
+      return { ...state, ...action.payload };
     case types.LOGIN_FAILURE:
-      return state;
+      return { ...state, ...action.payload };
+    case types.LOGIN_INPUT:
+      return { ...state, ...action.payload };
     default:
       return state;
   }

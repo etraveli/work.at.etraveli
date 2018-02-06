@@ -7,7 +7,7 @@ import * as myTripAPI from '../../services/myTripAPI';
 jest.mock('../../services/myTripAPI');
 
 describe('LoginPageContainer', () => {
-  it('enhances a LoginPage component with rpc call to post the login form to', () => {
+  it.skip('enhances a LoginPage component with rpc call to post the login form to', () => {
     // noinspection JSAnnotator
     myTripAPI.login = jest.fn(() => new Promise(() => {}));
     const email = 'email';

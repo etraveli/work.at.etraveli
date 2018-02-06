@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { BrowserRouter, Link, Match, Miss, Redirect } from 'react-router';
+import { logout } from '../actions';
+import LoginPage from './loginPage';
 import HomePage from '../components/homePage';
-import LoginForm from '../components/loginForm';
-import loginPage from './loginPage';
 import MyTripPage from '../components/myTripPage';
 import NoPageFoundPage from '../components/noPageFoundPage';
 import { isAuthenticated, clearSession } from '../utils/authUtil';
@@ -11,29 +13,28 @@ import { Left, Right } from '../utils/generalUtils';
 const pageDecider = isAuthorized =>
   isAuthorized ? Right(isAuthorized) : Left(isAuthorized);
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
+export class App extends Component {
+  // constructor(props) {
+  //   super(props);
 
-    this.state = {
-      isAuthenticated: isAuthenticated()
-    };
+  //   this.state = {
+  //     isAuthenticated: isAuthenticated()
+  //   };
 
-    this.handleLogin = this.handleLogin.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
-  }
+  //   this.handleLogin = this.handleLogin.bind(this);
+  //   this.handleLogout = this.handleLogout.bind(this);
+  // }
 
-  handleLogin(success) {
-    this.setState({ isAuthenticated: success });
-  }
+  // handleLogin(success) {
+  //   this.setState({ isAuthenticated: success });
+  // }
 
-  handleLogout() {
-    clearSession();
-    this.setState({ isAuthenticated: false });
-  }
+  // handleLogout() {
+  //   clearSession();
+  //   this.setState({ isAuthenticated: false });
+  // }
 
   render() {
-    const LoginPage = loginPage(LoginForm);
     return (
       <BrowserRouter>
         <div>
@@ -42,19 +43,19 @@ export default class App extends Component {
               <li>
                 <Link to="/">Home</Link>
               </li>
-              {!this.state.isAuthenticated && (
+              {!this.props.isAuthenticated && (
                 <li>
                   <Link to="/login">Login</Link>
                 </li>
               )}
-              {this.state.isAuthenticated && (
+              {this.props.isAuthenticated && (
                 <li>
                   <Link to="/mytrip">MyTrip</Link>
                 </li>
               )}
-              {this.state.isAuthenticated && (
+              {this.props.isAuthenticated && (
                 <li>
-                  <Link to="/logout" onClick={this.handleLogout}>
+                  <Link to="/logout" onClick={this.props.logout}>
                     Logout
                   </Link>
                 </li>
@@ -66,8 +67,8 @@ export default class App extends Component {
             <Match
               pattern="/login"
               render={props =>
-                pageDecider(isAuthenticated()).fold(
-                  () => <LoginPage onLogin={this.handleLogin} />,
+                pageDecider(this.props.isAuthenticated).fold(
+                  () => <LoginPage />,
                   () => (
                     <Redirect
                       to={{
@@ -94,7 +95,7 @@ export default class App extends Component {
             <Match
               pattern="/mytrip"
               render={props =>
-                pageDecider(isAuthenticated()).fold(
+                pageDecider(this.props.isAuthenticated).fold(
                   () => (
                     <Redirect
                       to={{
@@ -115,3 +116,18 @@ export default class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+  logout: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+const mapDispatchToProps = {
+  logout
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
