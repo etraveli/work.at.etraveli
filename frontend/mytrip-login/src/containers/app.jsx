@@ -2,37 +2,20 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { BrowserRouter, Link, Match, Miss, Redirect } from 'react-router';
-import { logout } from '../actions';
+import { logout, hasJWT } from '../actions';
 import LoginPage from './loginPage';
 import HomePage from '../components/homePage';
 import MyTripPage from '../components/myTripPage';
 import NoPageFoundPage from '../components/noPageFoundPage';
-import { isAuthenticated, clearSession } from '../utils/authUtil';
 import { Left, Right } from '../utils/generalUtils';
 
 const pageDecider = isAuthorized =>
   isAuthorized ? Right(isAuthorized) : Left(isAuthorized);
 
 export class App extends Component {
-  // constructor(props) {
-  //   super(props);
-
-  //   this.state = {
-  //     isAuthenticated: isAuthenticated()
-  //   };
-
-  //   this.handleLogin = this.handleLogin.bind(this);
-  //   this.handleLogout = this.handleLogout.bind(this);
-  // }
-
-  // handleLogin(success) {
-  //   this.setState({ isAuthenticated: success });
-  // }
-
-  // handleLogout() {
-  //   clearSession();
-  //   this.setState({ isAuthenticated: false });
-  // }
+  componentDidMount() {
+    this.props.hasJWT();
+  }
 
   render() {
     return (
@@ -119,7 +102,8 @@ export class App extends Component {
 
 App.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
+  hasJWT: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -127,7 +111,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  logout
+  logout,
+  hasJWT
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

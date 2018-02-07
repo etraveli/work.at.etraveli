@@ -2,12 +2,17 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import LoginForm from '../loginForm';
 
-const setup = (email = '', bookingNumber = '') => {
+const setup = (
+  email = '',
+  bookingNumber = '',
+  handleInput = () => {},
+  handleSubmit = () => {}
+) => {
   const props = {
     email,
     bookingNumber,
-    handleInput: () => {},
-    handleSubmit: () => {}
+    handleInput,
+    handleSubmit
   };
   return shallow(<LoginForm {...props} />);
 };
@@ -44,16 +49,22 @@ describe('<LoginForm />', () => {
     expect(component.find('button').prop('type')).toBe('submit');
   });
 
+  describe('onChange', () => {
+    it('should call handleInput prop', () => {
+      const mockHandleInputProp = jest.fn();
+      const component = setup('', '', mockHandleInputProp);
+      component.find('input[name="email"]').simulate('change');
+      component.find('input[name="bookingNumber"]').simulate('change');
+      expect(mockHandleInputProp).toHaveBeenCalledTimes(2);
+    });
+  });
+
   describe('onSubmit', () => {
-    it.skip('triggers callback onLogin', () => {
-      const handleLogin = jest.fn();
-      const component = shallow(<LoginForm onLogin={handleLogin} />);
-      const event = { preventDefault() {} };
-      component.find('form').simulate('submit', event);
-      expect(handleLogin).toHaveBeenCalledWith(
-        component.state().email,
-        component.state().bookingNumber
-      );
+    it('should call handleSubmit prop', () => {
+      const mockHandleSubmitProp = jest.fn();
+      const component = setup('', '', () => {}, mockHandleSubmitProp);
+      component.find('form').simulate('submit');
+      expect(mockHandleSubmitProp).toHaveBeenCalledTimes(1);
     });
   });
 });

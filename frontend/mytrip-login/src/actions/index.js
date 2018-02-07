@@ -1,8 +1,19 @@
 import * as types from '../constants/actionTypes';
 
 import { persistJWT, isAuthenticated, clearSession } from '../utils/authUtil';
-import { eitherFunctionOrNot } from '../utils/generalUtils';
+// import { eitherFunctionOrNot } from '../utils/generalUtils';
 import * as myTripAPI from '../services/myTripAPI';
+
+export const hasJWT = () => dispatch =>
+  isAuthenticated()
+    ? dispatch({
+        type: types.LOGIN_SUCCESS,
+        payload: { isAuthenticated: true }
+      })
+    : dispatch({
+        type: types.LOGIN_FAILURE,
+        payload: { isAuthenticated: false }
+      });
 
 export const loginInput = (key, value) => ({
   type: types.LOGIN_INPUT,
