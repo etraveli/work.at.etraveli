@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { BrowserRouter, Link, Match, Miss, Redirect } from 'react-router';
-import { logout, hasJWT } from '../actions';
+import { logout, hasJWT } from '../actions/auth';
 import LoginPage from './loginPage';
+import SignupPage from './signupPage';
 import HomePage from '../components/homePage';
 import MyTripPage from '../components/myTripPage';
 import NoPageFoundPage from '../components/noPageFoundPage';
@@ -31,6 +32,11 @@ export class App extends Component {
                   <Link to="/login">Login</Link>
                 </li>
               )}
+              {!this.props.isAuthenticated && (
+                <li>
+                  <Link to="/signup">Signup</Link>
+                </li>
+              )}
               {this.props.isAuthenticated && (
                 <li>
                   <Link to="/mytrip">MyTrip</Link>
@@ -52,6 +58,22 @@ export class App extends Component {
               render={props =>
                 pageDecider(this.props.isAuthenticated).fold(
                   () => <LoginPage />,
+                  () => (
+                    <Redirect
+                      to={{
+                        pathname: '/mytrip',
+                        state: { from: props.location }
+                      }}
+                    />
+                  )
+                )
+              }
+            />
+            <Match
+              pattern="/signup"
+              render={props =>
+                pageDecider(this.props.isAuthenticated).fold(
+                  () => <SignupPage />,
                   () => (
                     <Redirect
                       to={{

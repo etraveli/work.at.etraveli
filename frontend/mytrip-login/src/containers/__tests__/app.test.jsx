@@ -33,6 +33,11 @@ describe('<App/>', () => {
       expect(component.contains(<Link to="/login">Login</Link>)).toBe(true);
     });
 
+    it('does render a link to the Signup  page', () => {
+      const component = setup();
+      expect(component.contains(<Link to="/signup">Signup</Link>)).toBe(true);
+    });
+
     it('matches component to url /login', () => {
       const component = setup();
       const matchPatterns = [];
@@ -61,6 +66,11 @@ describe('<App/>', () => {
     it('does not render a link to the login page', () => {
       const component = setup(true);
       expect(component.contains(<Link to="/login">Login</Link>)).toBe(false);
+    });
+
+    it('does not render a link to the Signup  page', () => {
+      const component = setup(true);
+      expect(component.contains(<Link to="/signup">Signup</Link>)).toBe(false);
     });
 
     it('renders a link to the MyTrip page', () => {
