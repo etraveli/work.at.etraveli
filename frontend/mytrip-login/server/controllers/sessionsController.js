@@ -1,9 +1,19 @@
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
-const Left = require('../../src/utils/generalUtils').Left;
-const Right = require('../../src/utils/generalUtils').Right;
 const encryption = require('../../src/utils/encryption')(crypto);
+const {
+  Left,
+  Right,
+  Sum,
+  compose,
+  curry,
+  callTimes,
+  charAt,
+  randomInRange
+} = require('../../src/utils/generalUtils');
 
+const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const NUMS = '0123456789';
 const secret = 'HowardHughes';
 
 const createHmac = data =>
@@ -21,24 +31,19 @@ const authenticateCustomer = (email, bookingNumber) =>
     ? Left('Unauthorized login attempt')
     : Right(createToken(email));
 
-const generateBookingNumber = email => {
-  try {
-    const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const NUMS = '0123456789';
-    const bookingNumber = new Array(6)
-      .map(
-        i =>
-          i < 4
-            ? NUMS.charAt(Math.floor(Math.random() * NUMS.lenght))
-            : CHARS.charAt(Math.floor(Math.random() * CHARS.lenght))
-      )
-      .join('');
-    console.log(bookingNumber);
-    return Right({ email, bookingNumber });
-  } catch (e) {
-    return Left('Unable to generate new booking number');
-  }
+// To simple email check for simplicity
+const validateEmail = email => {
+  const regex = new RegExp(/@/);
+  return email.match(regex) ? Right(email) : Left('Invalid email');
 };
+
+const randomChar = compose(curry(charAt)(CHARS), randomInRange);
+const randomNumber = compose(curry(charAt)(NUMS), randomInRange);
+
+const generateBookingNumber = () =>
+  Sum.of('')
+    .concat(Sum.of(callTimes('', () => randomNumber(NUMS), 3)))
+    .concat(Sum.of(callTimes('', () => randomChar(CHARS), 3)));
 
 module.exports = {
   create(request, response) {
@@ -53,10 +58,13 @@ module.exports = {
   },
   register(request, response) {
     const { email } = request.body;
-    generateBookingNumber(email).fold(
+    validateEmail(email).fold(
       message => response.status(400).json({ message }),
-      ({ email, bookingNumber }) =>
-        response.status(200).json({ email, bookingNumber })
+      email =>
+        response.status(200).json({
+          email,
+          bookingNumber: generateBookingNumber().fold(n => n)
+        })
     );
   }
 };
