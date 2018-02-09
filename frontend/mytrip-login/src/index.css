@@ -36,6 +36,7 @@ body {
   padding: 10px;
 }
 
+.mytrip-content__signup-form-row > button,
 .mytrip-content__login-form-row > button {
   white-space: nowrap;
   border: none;
@@ -53,21 +54,25 @@ body {
   display: inline-block;
 }
 
+.mytrip-content__signup-form-row,
 .mytrip-content__login-form-row {
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
 }
 
+.mytrip-content__signup-form-message,
 .mytrip-content__login-form-message {
   line-height: 1.5rem;
   padding: 0.5rem;
   width: 100%;
 }
+.mytrip-content__signup-form-message--error,
 .mytrip-content__login-form-message--error {
   background-color: #f2360c;
 }
 
+.mytrip-content__signup-form-input-field,
 .mytrip-content__login-form-input-field {
   background-color: #ffffec;
   line-height: 1.5rem;
@@ -77,11 +82,14 @@ body {
 }
 
 @media only screen and (min-width: 768px) {
+  .mytrip-content__signup-form-message,
+  .mytrip-content__signup-form-input-field,
   .mytrip-content__login-form-message,
   .mytrip-content__login-form-input-field {
     width: 246px;
   }
 
+  .mytrip-content__signup-form-row > button,
   .mytrip-content__login-form-row > button {
     width: 123px;
   }
