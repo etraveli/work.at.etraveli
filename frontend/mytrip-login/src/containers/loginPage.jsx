@@ -40,7 +40,8 @@ LoginPage.propTypes = {
   email: PropTypes.string.isRequired,
   bookingNumber: PropTypes.string.isRequired,
   login: PropTypes.func.isRequired,
-  loginInput: PropTypes.func.isRequired
+  loginInput: PropTypes.func.isRequired,
+  error: PropTypes.object
 };
 
 const mapStateToProps = state => ({

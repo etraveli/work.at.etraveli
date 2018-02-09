@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { signup, signupInput } from '../actions/register';
+import { login } from '../actions/auth';
 import SignupForm from '../components/signupForm';
+import SignupConfirm from '../components/signupConfirm';
 
 export class SignupPage extends Component {
   constructor(props) {
     super(props);
     this.handleFormInputChange = this.handleFormInputChange.bind(this);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleFormSignupSubmit = this.handleFormSignupSubmit.bind(this);
+    this.handleFormLoginSubmit = this.handleFormLoginSubmit.bind(this);
   }
 
   handleFormInputChange(e) {
@@ -16,38 +19,60 @@ export class SignupPage extends Component {
     this.props.signupInput(key, value);
   }
 
-  handleFormSubmit(e) {
+  handleFormSignupSubmit(e) {
     e.preventDefault();
     const { email } = this.props;
     this.props.signup(email);
   }
 
+  handleFormLoginSubmit(e) {
+    e.preventDefault();
+    const { email, bookingNumber } = this.props;
+    this.props.login(email, bookingNumber);
+  }
+
   render() {
-    const { email } = this.props;
+    const { email, bookingNumber, error } = this.props;
     return (
-      <SignupForm
-        email={email}
-        handleInput={this.handleFormInputChange}
-        handleSubmit={this.handleFormSubmit}
-      />
+      <div>
+        {email && bookingNumber ? (
+          <SignupConfirm
+            email={email}
+            bookingNumber={bookingNumber}
+            handleSubmit={this.handleFormLoginSubmit}
+          />
+        ) : (
+          <SignupForm
+            email={email}
+            handleInput={this.handleFormInputChange}
+            handleSubmit={this.handleFormSignupSubmit}
+            errorMsg={error && error.message ? error.message : null}
+          />
+        )}
+      </div>
     );
   }
 }
 
 SignupPage.propTypes = {
   email: PropTypes.string.isRequired,
+  bookingNumber: PropTypes.string.isRequired,
   signup: PropTypes.func.isRequired,
-  signupInput: PropTypes.func.isRequired
+  signupInput: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
+  error: PropTypes.object
 };
 
 const mapStateToProps = state => ({
   error: state.register.error,
-  email: state.register.email
+  email: state.register.email,
+  bookingNumber: state.register.bookingNumber
 });
 
 const mapDispatchToProps = {
   signup,
-  signupInput
+  signupInput,
+  login
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupPage);
