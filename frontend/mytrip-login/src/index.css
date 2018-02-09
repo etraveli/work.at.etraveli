@@ -59,6 +59,15 @@ body {
   margin-bottom: 1rem;
 }
 
+.mytrip-content__login-form-message {
+  line-height: 1.5rem;
+  padding: 0.5rem;
+  width: 100%;
+}
+.mytrip-content__login-form-message--error {
+  background-color: #f2360c;
+}
+
 .mytrip-content__login-form-input-field {
   background-color: #ffffec;
   line-height: 1.5rem;
@@ -68,6 +77,7 @@ body {
 }
 
 @media only screen and (min-width: 768px) {
+  .mytrip-content__login-form-message,
   .mytrip-content__login-form-input-field {
     width: 246px;
   }
