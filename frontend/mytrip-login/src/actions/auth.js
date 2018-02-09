@@ -1,7 +1,5 @@
 import * as types from '../constants/actionTypes';
-
 import { persistJWT, isAuthenticated, clearSession } from '../utils/authUtil';
-// import { eitherFunctionOrNot } from '../utils/generalUtils';
 import * as myTripAPI from '../services/myTripAPI';
 
 export const hasJWT = () => dispatch =>
@@ -45,6 +43,16 @@ export const logout = () => {
   clearSession();
   return {
     type: types.LOGOUT_SUCCESS,
-    payload: { isAuthenticated: false, email: '', bookingNumber: '' }
+    payload: {
+      error: null,
+      isAuthenticated: false,
+      email: '',
+      bookingNumber: ''
+    }
   };
 };
+
+export const signupInput = (key, value) => ({
+  type: types.SIGNUP_INPUT,
+  payload: { [key]: value }
+});
