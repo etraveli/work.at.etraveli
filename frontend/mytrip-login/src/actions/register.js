@@ -6,21 +6,22 @@ export const signupInput = (key, value) => ({
   payload: { [key]: value }
 });
 
-export const signup = email => dispatch => {
+export const signup = email => dispatch =>
   myTripAPI
-    .register(email)
-    .then(data =>
+    .signup(email)
+    .then(({ email, bookingNumber }) =>
       dispatch({
         type: types.SIGNUP_SUCCESS,
-        payload: { data }
+        payload: { email, bookingNumber }
       })
     )
     .catch(e =>
       dispatch({
         type: types.SIGNUP_FAILURE,
         payload: {
-          error: { message: 'Failed to register, please try again', raw: e }
+          error: {
+            message: 'Failed to register, be sure to enter a vaild email'
+          }
         }
       })
     );
-};

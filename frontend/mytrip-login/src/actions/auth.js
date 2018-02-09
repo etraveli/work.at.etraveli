@@ -19,7 +19,7 @@ export const loginInput = (key, value) => ({
 });
 
 export const login = (email, bookingNumber) => dispatch => {
-  myTripAPI
+  return myTripAPI
     .login(email, bookingNumber)
     .then(persistJWT)
     .then(() =>
@@ -32,7 +32,7 @@ export const login = (email, bookingNumber) => dispatch => {
       dispatch({
         type: types.LOGIN_FAILURE,
         payload: {
-          error: { message: 'Wrong email or booking number', raw: e },
+          error: { message: 'Wrong email or booking number' },
           isAuthenticated: false
         }
       })
@@ -51,8 +51,3 @@ export const logout = () => {
     }
   };
 };
-
-export const signupInput = (key, value) => ({
-  type: types.SIGNUP_INPUT,
-  payload: { [key]: value }
-});
