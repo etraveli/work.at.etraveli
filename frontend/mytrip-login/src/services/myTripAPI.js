@@ -46,9 +46,9 @@ export const login = (email, bookingNumber) =>
     .then(checkStatus)
     .then(parseJSON);
 
-export const register = email =>
+export const signup = email =>
   fetch(
-    '/register',
+    '/signup',
     Object.assign({}, defaultConfig, {
       method: 'POST',
       body: JSON.stringify({
@@ -57,4 +57,8 @@ export const register = email =>
     })
   )
     .then(checkStatus)
-    .then(parseJSON);
+    .then(parseJSON)
+    .then(({ email, bookingNumber }) => ({
+      email,
+      bookingNumber: encryption.decrypt(email, bookingNumber)
+    }));

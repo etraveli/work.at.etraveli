@@ -63,7 +63,9 @@ module.exports = {
       email =>
         response.status(200).json({
           email,
-          bookingNumber: generateBookingNumber().fold(n => n)
+          bookingNumber: generateBookingNumber().fold(n =>
+            encryption.encrypt(email, n)
+          )
         })
     );
   }
