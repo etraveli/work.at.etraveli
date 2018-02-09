@@ -1,8 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const LoginForm = ({ email, bookingNumber, handleSubmit, handleInput }) => (
+const LoginForm = ({
+  email,
+  bookingNumber,
+  handleSubmit,
+  handleInput,
+  errorMsg
+}) => (
   <form onSubmit={handleSubmit} className="mytrip-content__login-form">
+    {errorMsg ? (
+      <div className="mytrip-content__login-form-row">
+        <div className="mytrip-content__login-form-message mytrip-content__login-form-message--error">
+          {errorMsg}
+        </div>
+      </div>
+    ) : (
+      ''
+    )}
     <div className="mytrip-content__login-form-row">
       <label htmlFor="email">Email:</label>
       <input

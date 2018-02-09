@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { login, loginInput } from '../actions';
+import { login, loginInput } from '../actions/auth';
 import LoginForm from '../components/loginForm';
 
 export class LoginPage extends Component {
@@ -23,12 +23,14 @@ export class LoginPage extends Component {
   }
 
   render() {
+    const { error, email, bookingNumber } = this.props;
     return (
       <LoginForm
-        email={this.props.email}
-        bookingNumber={this.props.bookingNumber}
+        email={email}
+        bookingNumber={bookingNumber}
         handleInput={this.handleFormInputChange}
         handleSubmit={this.handleFormSubmit}
+        errorMsg={error && error.message ? error.message : null}
       />
     );
   }
@@ -42,9 +44,9 @@ LoginPage.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  error: state.auth.error,
   email: state.auth.email,
-  bookingNumber: state.auth.bookingNumber
+  bookingNumber: state.auth.bookingNumber,
+  error: state.auth.error
 });
 
 const mapDispatchToProps = {

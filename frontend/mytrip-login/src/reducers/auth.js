@@ -16,6 +16,8 @@ export default function auth(state = initialState, action) {
       return { ...state, ...action.payload };
     case types.LOGIN_INPUT:
       return { ...state, ...action.payload };
+    case types.LOGOUT_SUCCESS:
+      return { ...state, ...action.payload };
     default:
       return state;
   }
