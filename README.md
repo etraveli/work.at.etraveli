@@ -11,7 +11,7 @@ When the app is loaded, a list of the movies should be displayed as the image be
 There should be a way to order the movies by `Year` or `Episode` as the select menu shows in the image below:
 ![Sort by year of episode](https://user-images.githubusercontent.com/709159/39311979-a09dd338-496e-11e8-9183-57ae82a511cb.png)
 
-When clicking on a movie in the list, a detailed view of it should be displayed in the right hand side of the application. In this case, ”Episode V - The Empire Strikes Back” is chosen (When no movie is selected, a default text should be displayed instead):
+When clicking on a movie in the list, a detailed view of it should be displayed in the right hand side of the application. In this case, ”Episode V - The Empire Strikes Back” is chosen (when no movie is selected, a default text should be displayed instead):
 ![Episode V details](https://user-images.githubusercontent.com/709159/39311976-a080c3f6-496e-11e8-88df-64642a3ef681.png)
 
 Additionally, there should be a way to filter the movies by entering their name in the text input:
