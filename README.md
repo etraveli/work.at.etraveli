@@ -5,7 +5,7 @@ For this assignment you'll create an app for listing Star Wars movies. The data 
 
 ## Description
 
-When app is loaded, a list of the movies should be displayed as the image below shows:
+When the app is loaded, a list of the movies should be displayed as the image below shows:
 ![Default view](https://user-images.githubusercontent.com/709159/39311980-a0bc7b08-496e-11e8-8171-5f4c04cf1bd2.png)
 
 There should be a way to order the movies by `Year` or `Episode` as the select menu shows in the image below:
