@@ -1,6 +1,6 @@
-# Front-end assignment at Etraveli
+# Front-end assignment at Etraveli Group
 
-For this assignment you'll create an app for listing Star Wars movies. The data should be fetched from the following endpoint: https://star-wars-api.herokuapp.com/films.
+For this assignment you'll create an app for listing Star Wars movies. The data should be fetched from the following endpoint: https://swapi.dev/api/films/?format=json.
 
 
 ## Description
@@ -22,7 +22,7 @@ Additionally, there should be a way to filter the movies by entering their name 
 
 ## Tooling
 
-At Etraveli, we're developing primary using React and Redux, but you're free to complete this assignment in whichever way you're comfortable with. The only requirement we have is that it should be written in JavaScript.
+At Etraveli Group, we're developing primary using React and Redux, but you're free to complete this assignment in whichever way you're comfortable with. The only requirement we have is that it should be written in JavaScript or Typescript.
 
 For this assignment, you should create a repository in Git and commit all your changes in it. How you will hand in your code is explained below.
 
